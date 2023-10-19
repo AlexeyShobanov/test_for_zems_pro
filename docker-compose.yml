@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  mysql:
+    image: mysql
+    cap_add:
+      - SYS_NICE
+    environment:
+      MYSQL_ROOT_PASSWORD: zems_pro
+      MYSQL_DATABASE: zems_pro
+    volumes:
+      - zems_db:/var/lib/mysql
+    ports:
+      - "33306:3306"
+volumes:
+  zems_db:
+    external: true
