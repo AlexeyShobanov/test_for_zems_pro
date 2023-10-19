@@ -19,7 +19,7 @@ class ProjectSeeder extends Seeder
                 ProjectFactory::new()->count(20)
                     ->has(
                         TaskFactory::new()
-                            ->count(rand(5, 10))
+                            ->count(rand(5, 15))
                     )
             )
             ->create();
