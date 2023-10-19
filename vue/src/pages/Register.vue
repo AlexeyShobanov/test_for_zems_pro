@@ -52,12 +52,9 @@
 
 <script>
 import { mapActions } from "vuex";
-import Alert from "../components/Alert.vue";
-import axios from "axios";
 import router from "../router/index.js";
 
 export default {
-  components: { Alert },
   data() {
     return {
       registerFormData: {
@@ -75,7 +72,7 @@ export default {
     async submit() {
       try {
         await this.register(this.registerFormData);
-        await router.push({ name: "Projects" });
+        await router.push({name: "Project"});
       } catch (e) {
         console.log(e.message);
       }
