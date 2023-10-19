@@ -17,7 +17,7 @@ directives.forEach((directive) => {
 });
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "http://test.lcl:8000/";
+axios.defaults.baseURL = `${import.meta.env.VITE_API_BASE_URL}/`;
 app.config.globalProperties.axios = axios;
 
 store
