@@ -9,28 +9,14 @@
             </div>
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
-<!--                <router-link-->
-<!--                    v-for="item in navigation"-->
-<!--                    :key="item.name"-->
-<!--                    :to="item.to"-->
-<!--                    active-class="bg-gray-900 text-white"-->
-<!--                    :class="[-->
-<!--                        this.$route.name === item.to.name-->
-<!--                        ? ''-->
-<!--                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',-->
-<!--                        'rounded-md px-3 py-2 text-sm font-medium'-->
-<!--                        ]"-->
-<!--                >-->
-<!--                  {{ item.name }}-->
-<!--                </router-link>-->
               </div>
             </div>
           </div>
           <div class="hidden md:block">
             <div class="ml-4 flex items-center md:ml-6">
               <div class="ml-3 text-right">
-                <div class="text-base font-medium leading-none text-white">{{ user.name }}</div>
-                <div class="text-sm font-medium leading-none text-gray-400">{{ user.email }}</div>
+                <div class="text-base font-medium leading-none text-white">{{ !user ? "" : user.name }}</div>
+                <div class="text-sm font-medium leading-none text-gray-400">{{ !user ? "" : user.email }}</div>
               </div>
               <!-- Profile dropdown -->
               <Menu as="div" class="relative ml-3">
@@ -120,11 +106,6 @@ import router from "../router/index.js";
 import {computed} from "vue";
 import store from "../store/index.js";
 
-// const navigation = [
-//   { name: 'Проекты', to: { name: "Project"} },
-//   { name: 'Задачи', to: { name: "Task"} },
-// ]
-
 export default {
   components: {
     Disclosure,
@@ -141,10 +122,12 @@ export default {
   methods: {
     ...mapActions({
       signOut: "auth/signOut",
+      clearStore: "project/clearStore",
     }),
     async logout() {
       try {
         await this.signOut();
+        await this.clearStore();
         await router.push({ name: "Login" });
       } catch (e) {
         console.log(e.message);

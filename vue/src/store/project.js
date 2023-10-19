@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "./index.js";
 
 export default {
     state: () => ({
@@ -88,6 +89,7 @@ export default {
                         }
                     );
                 commit('setTotalPages', response.data.meta.last_page);
+                console.log(response.data.meta)
                 if (!state.projects.length) {
                     commit('setProjects', response.data.data);
                 }
@@ -101,6 +103,7 @@ export default {
             }
         },
         async loadMoreProjects({state, commit}) {
+            console.log(state.totalPages)
             if (state.page < state.totalPages) {
                 commit('setPage', state.page + 1)
                 try {
@@ -113,6 +116,7 @@ export default {
                         }
                     );
                     commit('setProjects', [...state.projects, ...response.data.data]);
+                    console.log('ffffffffff')
                 } catch (e) {
                     console.log(e);
                 }
@@ -203,6 +207,9 @@ export default {
                 console.log(e);
             }
         },
+        async clearStore({state, commit}) {
+            commit('setProjects', []);
+        }
     },
     namespaced: true
 }

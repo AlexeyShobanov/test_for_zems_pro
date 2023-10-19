@@ -16,7 +16,7 @@ class ProjectSeeder extends Seeder
     {
         UserFactory::new()->count(1)
             ->has(
-                ProjectFactory::new()->count(10)
+                ProjectFactory::new()->count(20)
                     ->has(
                         TaskFactory::new()
                             ->count(rand(5, 10))

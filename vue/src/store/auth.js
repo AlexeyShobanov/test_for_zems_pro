@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "./index";
 export default {
     namespaced: true,
     state: () => ({
@@ -29,6 +30,22 @@ export default {
     },
 
     actions: {
+        async signIn({ dispatch }, credentials) {
+            console.log(credentials);
+            await axios.get("sanctum/csrf-cookie").then((res) => console.log(res));
+            await axios
+                .post(
+                    "api/v1/login",
+                    credentials,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                .then((res) => console.log(res));
+            return dispatch("me");
+        },
+
         async register({ dispatch }, register) {
             await axios.get("sanctum/csrf-cookie").then((res) => console.log(res));
             const response = await axios
@@ -40,31 +57,17 @@ export default {
                             'Content-Type': 'multipart/form-data'
                         }
                     });
-            if (response.user && response.user.email) {
-                await this.signIn({ dispatch }, {
-                    email: response.user.email,
+            if (response.data.user) {
+                await dispatch('signIn', {
+                    email: response.data.user.email,
                     password: register.password,
-                },);
+                })
             } else {
                 console.log(response.errors);
             }
             return dispatch("me");
         },
 
-        async signIn({ dispatch }, credentials) {
-            await axios.get("sanctum/csrf-cookie").then((res) => console.log(res));
-            await axios
-                .post(
-                    "api/v1/login",
-                    credentials,
-                    {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                })
-                .then((res) => console.log(res));
-            return dispatch("me");
-        },
         async signOut({ dispatch }) {
             await axios.post("api/v1/logout").then((res) => console.log(res));
             return dispatch("me");

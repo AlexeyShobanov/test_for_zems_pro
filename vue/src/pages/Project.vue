@@ -14,7 +14,6 @@
           </span>
         </div>
       </div>
-
     </header>
     <main>
       <create_form
@@ -48,8 +47,6 @@
             <pulse-loader :loading="isProjectsLoading" :color="color" :size="size"></pulse-loader>
           </div>
         </div>
-        <div v-intersection="loadMoreProjects" class="observer">
-        </div>
       </div>
     </main>
   </div>
@@ -79,12 +76,13 @@ export default {
       setCreateTaskFormVisible: "project/setCreateTaskFormVisible",
     }),
     ...mapActions({
-      loadMoreProjects: "project/loadMoreProjects",
+      // loadMoreProjects: "project/loadMoreProjects",
       fetchProjects: "project/fetchProjects",
       showCreateForm: "project/showCreateForm",
     }),
   },
   async mounted() {
+    console.log(this.projects)
     await this.fetchProjects();
   },
   computed: {
