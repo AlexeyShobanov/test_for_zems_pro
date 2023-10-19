@@ -15,7 +15,7 @@ class ProjectController extends Controller
 {
     public function index(): ProjectCollection
     {
-        return new ProjectCollection(auth()->user()->projects()->withCount('tasks')->orderBy('id', 'desc')->paginate(8));
+        return new ProjectCollection(auth()->user()->projects()->withCount('tasks')->orderBy('id', 'desc')->paginate(10));
     }
 
     public function show(Project $project, ShowProjectAction $action): ProjectResource
